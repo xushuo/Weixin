@@ -10,11 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.sun.swing.internal.plaf.metal.resources.metal;
-
 import Util.CheckUtil;
-import Util.XMLUtil;
+import Util.MsgUtil;
 import vo.TextMsg;
 
 /**
@@ -51,22 +48,31 @@ public class WeixinServlet extends HttpServlet {
 		}
 		
 		try {
-			Map<String, String> map=XMLUtil.xmlToMap(request);
-			String ToUserName = map.get("ToUserName");
-			String FromUserName = map.get("FromUserName");
-			String CreateTime = map.get("CreateTime");
-			String MsgType = map.get("MsgType");
-			String Content = map.get("Content");
-			String MsgId = map.get("MsgId");
+			Map<String, String> map=MsgUtil.xmlToMap(request);
+			String toUserName = map.get("ToUserName");
+			String fromUserName = map.get("FromUserName");
+			String createTime = map.get("CreateTime");
+			String msgType = map.get("MsgType");
+			String content = map.get("Content");
+			String msgId = map.get("MsgId");
+			
 			String msg="";
-			if("text".equals(MsgType)){
+			if(MsgUtil.MSG_TEXT.equals(msgType)){
+				if("1".equals(content)){
+					
+				}
 				TextMsg textMsg=new TextMsg();
-				textMsg.setFromUserName(ToUserName);
-				textMsg.setToUserName(FromUserName);
-				textMsg.setMsgType("text");
+				textMsg.setFromUserName(toUserName);
+				textMsg.setToUserName(fromUserName);
+				textMsg.setMsgType(MsgUtil.MSG_TEXT);
 				textMsg.setCreateTime(new Date().getTime());
-				textMsg.setContent("您发送的消息是"+Content);
-				msg=XMLUtil.textToXml(textMsg);
+				textMsg.setContent("您发送的消息是"+content);
+				msg=MsgUtil.textToXml(textMsg);
+			}else if(MsgUtil.MSG_EVENT.equals(msgType)){
+				String event = map.get("event");
+				if(MsgUtil.MSG_SUBSCRIBE.equals(event)){
+					msg = MsgUtil.initText(toUserName, fromUserName, content);
+				}
 			}
 			out.print(msg);
 		} catch (Exception e) {
