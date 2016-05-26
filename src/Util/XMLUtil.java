@@ -44,6 +44,7 @@ public class XMLUtil {
 	public static String textToXml(TextMsg textMsg) {
 		// TODO Auto-generated method stub
 		XStream xStream =new XStream();
+		xStream.alias("xml",textMsg.getClass());
 		String str = xStream.toXML(textMsg);
 		return str;
 	}
