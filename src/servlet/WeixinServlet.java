@@ -37,6 +37,9 @@ public class WeixinServlet extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		String signature= request.getParameter("signature");
 		String timestamp= request.getParameter("timestamp");
 		String nonce= request.getParameter("nonce");
@@ -44,7 +47,6 @@ public class WeixinServlet extends HttpServlet {
 		
 		PrintWriter out=response.getWriter();
 		if(CheckUtil.checkSignature(signature, timestamp, nonce)){
-			System.out.println(0);
 			out.println(echostr);
 		}
 		
