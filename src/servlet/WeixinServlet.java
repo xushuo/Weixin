@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.swing.internal.plaf.metal.resources.metal;
+
 import Util.CheckUtil;
+import Util.XMLUtil;
+import vo.TextMsg;
 
 /**
  * Servlet implementation class WeixinServlet
@@ -40,6 +46,32 @@ public class WeixinServlet extends HttpServlet {
 		if(CheckUtil.checkSignature(signature, timestamp, nonce)){
 			System.out.println(0);
 			out.println(echostr);
+		}
+		
+		try {
+			Map<String, String> map=XMLUtil.xmlToMap(request);
+			String ToUserName = map.get("ToUserName");
+			String FromUserName = map.get("FromUserName");
+			String CreateTime = map.get("CreateTime");
+			String MsgType = map.get("MsgType");
+			String Content = map.get("Content");
+			String MsgId = map.get("MsgId");
+			String msg="";
+			if("text".equals(MsgType)){
+				TextMsg textMsg=new TextMsg();
+				textMsg.setFromUserName(ToUserName);
+				textMsg.setToUserName(FromUserName);
+				textMsg.setMsgType("text");
+				textMsg.setCreateTime(new Date().getTime());
+				textMsg.setContent("您发送的消息是"+Content);
+				msg=XMLUtil.textToXml(textMsg);
+			}
+			out.print(msg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			out.close();
 		}
 		
 	}
