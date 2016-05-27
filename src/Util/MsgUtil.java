@@ -14,6 +14,8 @@ import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
 
+import vo.Image;
+import vo.ImageMsg;
 import vo.NewMsg;
 import vo.News;
 import vo.TextMsg;
@@ -76,6 +78,18 @@ public class MsgUtil {
 		return str;
 	}
 	
+	/*
+	 * 将图片对象转换成xml
+	 * */
+	public static String imageToXml(ImageMsg imageMsg) {
+		// TODO Auto-generated method stub
+		XStream xStream =new XStream();
+		xStream.alias("xml",imageMsg.getClass());
+		String str = xStream.toXML(imageMsg);
+		return str;
+	}
+	
+	
 	public static String initText(String ToUserName,String FromUserName,String Content){
 		TextMsg textMsg=new TextMsg();
 		textMsg.setFromUserName(ToUserName);
@@ -84,6 +98,19 @@ public class MsgUtil {
 		textMsg.setCreateTime(new Date().getTime());
 		textMsg.setContent(Content);
 		return MsgUtil.textToXml(textMsg);
+	}
+	
+	public static String initImage(String ToUserName,String FromUserName){
+		Image image=new Image();
+		ImageMsg imageMsg=new ImageMsg();
+		image.setMediaId("Wn-37JLJLH0TkMtROCcjXHweCLlpnXNqvhDMOZCbzCWfmrIR0t-ql7WLHOdxcC18");
+		imageMsg.setImage(image);
+		imageMsg.setCreateTime(new Date().getTime());
+		imageMsg.setFromUserName(ToUserName);
+		imageMsg.setToUserName(FromUserName);
+		imageMsg.setMsgType(MSG_IMAGE);
+		
+		return MsgUtil.imageToXml(imageMsg);
 	}
 	
 	public static String initNew(String ToUserName,String FromUserName){
@@ -153,6 +180,8 @@ public class MsgUtil {
 		sb.append(FileUtil.read("E:\\workspace\\Weixin\\src\\source\\everyday.properties"));
 		return sb.toString();
 	}
+	
+	
 	
 	public static void asd(){
 		String sa =FileUtil.read("src\\source\\everyday.properties");
