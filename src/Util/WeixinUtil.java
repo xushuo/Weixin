@@ -36,6 +36,7 @@ public class WeixinUtil {
 
 	private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	
+	//上传临时消息
 	private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
 	
 	/**
@@ -119,6 +120,13 @@ public class WeixinUtil {
 	 * @throws NoSuchAlgorithmException
 	 * @throws NoSuchProviderException
 	 * @throws KeyManagementException
+	 * 
+	 * 上传的临时多媒体文件有格式和大小限制，如下：
+	    图片（image）: 1M，支持JPG格式
+	    语音（voice）：2M，播放长度不超过60s，支持AMR\MP3格式
+	    视频（video）：10MB，支持MP4格式
+	    缩略图（thumb）：64KB，支持JPG格式
+	    
 	 */
 	public static String upload(String filePath, String accessToken,String type) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
 		File file = new File(filePath);
@@ -211,7 +219,7 @@ public class WeixinUtil {
 	public static void main(String[] args) throws ParseException, IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
 		//getAccessToken();
 		System.out.println(new Date().getTime());
-		String str = upload("E:\\workspace\\Weixin\\WebContent\\images\\scenery1.jpg", getToken(), "image");
+		String str = upload("E:\\workspace\\Weixin\\WebContent\\images\\thumb1.jpg", getToken(), "thumb");
 		System.out.println(str);
 	}
 }
