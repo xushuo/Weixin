@@ -1,6 +1,7 @@
 package Util;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
 
+import vo.NewMsg;
+import vo.News;
 import vo.TextMsg;
 
 public class MsgUtil {
@@ -27,6 +30,7 @@ public class MsgUtil {
 	public static final String MSG_UNSUBSCRIBE="unsubscribe";
 	public static final String MSG_CLICK="CLICK";
 	public static final String MSG_VIEW="VIEW";
+	public static final String MSG_NEWS="news";
 	/**
 	 * xml 转换成 map
 	 * 
@@ -60,6 +64,17 @@ public class MsgUtil {
 		return str;
 	}
 	
+	/*
+	 * 将图文对象转换成xml
+	 * */
+	public static String newToXml(NewMsg newMsg) {
+		// TODO Auto-generated method stub
+		XStream xStream =new XStream();
+		xStream.alias("xml",newMsg.getClass());
+		xStream.alias("item", new News().getClass());
+		String str = xStream.toXML(newMsg);
+		return str;
+	}
 	
 	public static String initText(String ToUserName,String FromUserName,String Content){
 		TextMsg textMsg=new TextMsg();
@@ -69,6 +84,26 @@ public class MsgUtil {
 		textMsg.setCreateTime(new Date().getTime());
 		textMsg.setContent(Content);
 		return MsgUtil.textToXml(textMsg);
+	}
+	
+	public static String initNew(String ToUserName,String FromUserName){
+		List<News> newlist=new ArrayList<>();
+		News news1=new News();
+		news1.setTitle("经典语句");
+		news1.setDescription("近期流行的逗比语句");
+		news1.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding1.jpg");
+		news1.setUrl("http://epaper.subaonet.com/csz8d/html/2014-11/05/content_283272.htm");
+		
+		newlist.add(news1);
+		
+		NewMsg newMsg=new NewMsg();
+		newMsg.setArticleCount(newlist.size());
+		newMsg.setArticles(newlist);
+		newMsg.setFromUserName(ToUserName);
+		newMsg.setToUserName(FromUserName);
+		newMsg.setMsgType(MSG_NEWS);
+		newMsg.setCreateTime(new Date().getTime());
+		return MsgUtil.newToXml(newMsg);
 	}
 	
 	/*

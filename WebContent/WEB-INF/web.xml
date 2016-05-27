@@ -8,7 +8,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>WeixinServlet</servlet-name>
-  	<url-pattern>/*</url-pattern>
+  	<url-pattern>/WeixinServlet.do</url-pattern>
   </servlet-mapping>
    
 </web-app>

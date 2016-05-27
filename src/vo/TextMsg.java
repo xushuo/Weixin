@@ -1,6 +1,6 @@
 package vo;
 
-public class TextMsg {
+public class TextMsg extends BaseMsg{
 	/*
 	 * 
 	参数	描述
@@ -12,30 +12,9 @@ public class TextMsg {
 	MsgId	消息id，64位整型
 	 * 
 	 * */
-	private String ToUserName;
-	private String FromUserName;
-	private long CreateTime;
-	private String MsgType;
 	private String Content;
 	private String MsgId;
-	public String getToUserName() {
-		return ToUserName;
-	}
-	public void setToUserName(String toUserName) {
-		ToUserName = toUserName;
-	}
-	public String getFromUserName() {
-		return FromUserName;
-	}
-	public void setFromUserName(String fromUserName) {
-		FromUserName = fromUserName;
-	}
-	public String getMsgType() {
-		return MsgType;
-	}
-	public void setMsgType(String msgType) {
-		MsgType = msgType;
-	}
+	 
 	public String getContent() {
 		return Content;
 	}
@@ -48,12 +27,5 @@ public class TextMsg {
 	public void setMsgId(String msgId) {
 		MsgId = msgId;
 	}
-	public long getCreateTime() {
-		return CreateTime;
-	}
-	public void setCreateTime(long createTime) {
-		CreateTime = createTime;
-	}
-
 
 }
