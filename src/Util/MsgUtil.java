@@ -89,12 +89,26 @@ public class MsgUtil {
 	public static String initNew(String ToUserName,String FromUserName){
 		List<News> newlist=new ArrayList<>();
 		News news1=new News();
-		news1.setTitle("经典语句");
+		news1.setTitle("近期流行的逗比语句");
 		news1.setDescription("近期流行的逗比语句");
 		news1.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding1.jpg");
 		news1.setUrl("http://epaper.subaonet.com/csz8d/html/2014-11/05/content_283272.htm");
 		
+		News news2=new News();
+		news2.setTitle("30条让你瞬间凌乱的经典搞笑句子，太逗比了！");
+		news2.setDescription("30条让你瞬间凌乱的经典搞笑句子，太逗比了！");
+		news2.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding2.jpg");
+		news2.setUrl("http://www.yikexun.cn/jingdiangaoxiaoyulu/2014/0924/24223.html");
+		
+		News news3=new News();
+		news3.setTitle("那些让你笑成逗比的句子");
+		news3.setDescription("那些让你笑成逗比的句子");
+		news3.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding3.jpg");
+		news3.setUrl("http://tieba.baidu.com/p/3027006605");
+		
 		newlist.add(news1);
+		newlist.add(news2);
+		newlist.add(news3);
 		
 		NewMsg newMsg=new NewMsg();
 		newMsg.setArticleCount(newlist.size());
