@@ -17,8 +17,8 @@ public class CheckUtil {
 		}
 		//sha1加密
 		String temp = Sha1Util.passAlgorithmsCiphering(content+"",Sha1Util.SHA_1);
-		System.out.println(temp);
-		System.out.println(signature);
+		//System.out.println(temp);
+		//System.out.println(signature);
 		return temp.equals(signature);
 	}
 	

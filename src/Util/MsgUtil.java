@@ -79,15 +79,40 @@ public class MsgUtil {
 		StringBuffer sb=new StringBuffer();
 		sb.append("这是徐硕的订阅号，谢谢你的关注！\n\n");
 		sb.append("1:订阅号介绍\n");
-		sb.append("2:每天一笑\n");
+		sb.append("2:每天一笑\n\n");
 		sb.append("回复'?'调出此菜单.");
 		return sb.toString();
 	}
 	
+	/*
+	 * 1:订阅号介绍
+	 * 
+	 * */
+	public static String firstText(){
+		StringBuffer sb=new StringBuffer();
+		sb.append("徐硕测试订阅号，用于每天的微信开发和开心。\nO(∩_∩)O~~！");
+		return sb.toString();
+	}
+	
+	/*
+	 * 2:每天一笑
+	 * 
+	 * */
+	public static String secondText(){
+		StringBuffer sb=new StringBuffer(); 
+		
+		sb.append(ReadFileUtil.read("E:\\workspace\\Weixin\\src\\source\\everyday.properties"));
+		return sb.toString();
+	}
+	
+	public static void asd(){
+		String sa =ReadFileUtil.read("src\\source\\everyday.properties");
+		System.out.println(sa);
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		asd();
 	}
 
 }

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Util.CheckUtil;
 import Util.MsgUtil;
-import vo.TextMsg;
 
 /**
  * Servlet implementation class WeixinServlet
@@ -44,7 +43,7 @@ public class WeixinServlet extends HttpServlet {
 		
 		PrintWriter out=response.getWriter();
 		if(CheckUtil.checkSignature(signature, timestamp, nonce)){
-			out.println(echostr);
+			out.print(echostr);
 		}
 		
 		try {
@@ -55,23 +54,20 @@ public class WeixinServlet extends HttpServlet {
 			String msgType = map.get("MsgType");
 			String content = map.get("Content");
 			String msgId = map.get("MsgId");
-			
 			String msg="";
 			if(MsgUtil.MSG_TEXT.equals(msgType)){
 				if("1".equals(content)){
-					
+					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.firstText());
 				}
-				TextMsg textMsg=new TextMsg();
-				textMsg.setFromUserName(toUserName);
-				textMsg.setToUserName(fromUserName);
-				textMsg.setMsgType(MsgUtil.MSG_TEXT);
-				textMsg.setCreateTime(new Date().getTime());
-				textMsg.setContent("您发送的消息是"+content);
-				msg=MsgUtil.textToXml(textMsg);
+				if("2".equals(content)){
+					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.secondText());
+				}else if("?".equals(content)||"？".equals(content)){
+					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
+				}
 			}else if(MsgUtil.MSG_EVENT.equals(msgType)){
-				String event = map.get("event");
+				String event = map.get("Event");
 				if(MsgUtil.MSG_SUBSCRIBE.equals(event)){
-					msg = MsgUtil.initText(toUserName, fromUserName, content);
+					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
 				}
 			}
 			out.print(msg);
