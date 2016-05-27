@@ -1,7 +1,10 @@
 package Util;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 
+import javax.xml.crypto.Data;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -65,19 +68,32 @@ public class WeixinUtil {
 	 * 获取access token
 	 * 
 	 * */
-	public static AccessToken getAccessToken() throws ParseException, IOException{
-		AccessToken token=new AccessToken();
+	public static void getAccessToken() throws ParseException, IOException{
 		String url = ACCESS_TOKEN_URL.replace("APPID", APPID).replace("APPSECRET", APPSECRET);
 		JSONObject jsonObject=doGetStr(url);
 		if(jsonObject!=null){
-			token.setToken(jsonObject.getString("access_token"));
-			token.setExpiresIn(jsonObject.getInt("expires_in"));
+			String token = jsonObject.getString("access_token");
+			HashMap<String, String> map =new HashMap<>();
+			map.put("token", token);
+			long expires_in = Long.parseLong(jsonObject.getString("expires_in"));
+			map.put("time", (new Date().getTime()+expires_in)+"");
+			propertyUtil.write("E:\\workspace\\Weixin\\src\\source\\token.properties", map);
 		}
+	}
+	
+	public static String getToken() throws ParseException, IOException {
+		String time = propertyUtil.read("E:\\workspace\\Weixin\\src\\source\\token.properties", "time");
+		long datePre = Long.parseLong(time);
+		long dateNow = new Date().getTime();
+		if(dateNow>=datePre){
+			getAccessToken();
+		}
+		String token = propertyUtil.read("E:\\workspace\\Weixin\\src\\source\\token.properties", "token");
 		return token;
 	}
 	
 	public static void main(String[] args) throws ParseException, IOException {
-		AccessToken token = getAccessToken();
-		System.out.println(token.toString());
+		getAccessToken();
+		System.out.println(new Date().getTime());
 	}
 }

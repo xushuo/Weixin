@@ -150,12 +150,12 @@ public class MsgUtil {
 	public static String secondText(){
 		StringBuffer sb=new StringBuffer(); 
 		
-		sb.append(ReadFileUtil.read("E:\\workspace\\Weixin\\src\\source\\everyday.properties"));
+		sb.append(FileUtil.read("E:\\workspace\\Weixin\\src\\source\\everyday.properties"));
 		return sb.toString();
 	}
 	
 	public static void asd(){
-		String sa =ReadFileUtil.read("src\\source\\everyday.properties");
+		String sa =FileUtil.read("src\\source\\everyday.properties");
 		System.out.println(sa);
 	}
 	

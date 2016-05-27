@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ReadFileUtil {
+public class FileUtil {
 
 	public static void write(String path,String content){
 		File file = new File(path);  
