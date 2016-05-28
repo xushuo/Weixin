@@ -40,6 +40,7 @@ public class MsgUtil {
 	public static final String MSG_VIEW="VIEW";
 	public static final String MSG_NEWS="news";
 	public static final String MSG_MUSIC="music";
+	public static final String MSG_SCANCODE="scancode_push";
 	
 	/**
 	 * xml 转换成 map

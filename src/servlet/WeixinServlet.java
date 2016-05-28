@@ -79,6 +79,20 @@ public class WeixinServlet extends HttpServlet {
 				if(MsgUtil.MSG_SUBSCRIBE.equals(event)){
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
 				}
+				if(MsgUtil.MSG_CLICK.equals(event)){
+					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
+				}
+				if(MsgUtil.MSG_VIEW.equals(event)){
+					String url = map.get("EventKey");
+					msg = MsgUtil.initText(toUserName, fromUserName, url);
+				}
+				if(MsgUtil.MSG_SCANCODE.equals(event)){
+					String key = map.get("EventKey");
+					msg = MsgUtil.initText(toUserName, fromUserName, key);
+				}
+			}else if(MsgUtil.MSG_LOCATION.equals(msgType)){
+				String label = map.get("Label");//开发文档有错误
+				msg = MsgUtil.initText(toUserName, fromUserName, label);
 			}
 			out.print(msg);
 		} catch (Exception e) {

@@ -291,17 +291,35 @@ public class WeixinUtil {
 		return result;
 	}
 	
+	public static JSONObject queryMenu(String token) throws ParseException, IOException {
+		String url = QUERY_MENU_URL.replace("ACCESS_TOKEN", token);
+		JSONObject jsonObject = doGetStr(url);
+		return jsonObject;
+	}
+	
+	public static int deleteMenu(String token) throws ParseException, IOException {
+		int result = 0;
+		String url = DELETE_MENU_URL.replace("ACCESS_TOKEN", token);
+		JSONObject jsonObject = doGetStr(url);
+		if(jsonObject !=null){
+			result=jsonObject.getInt("errcode");
+		}
+		return result;
+	}
+	
 	public static void main(String[] args) throws ParseException, IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
 		//getAccessToken();
 		//System.out.println(new Date().getTime());
 		//upload("E:\\Workspace\\Weixin\\WebContent\\images\\thumb2.jpg", getToken(), "thumb");
-		String menu =JSONObject.fromObject(WeixinUtil.initMenu()).toString();
-		int result= WeixinUtil.createMenu(WeixinUtil.getToken(), menu);
+		//String menu =JSONObject.fromObject(WeixinUtil.initMenu()).toString();
+		//int result= WeixinUtil.createMenu(WeixinUtil.getToken(), menu);
+		JSONObject jsonObject= WeixinUtil.queryMenu(WeixinUtil.getToken());
+		int result= WeixinUtil.deleteMenu(WeixinUtil.getToken());
+		System.out.println(jsonObject);
 		if(result==0){
 			System.out.println("创建菜单成功");
 		}else{
 			System.out.println(""+result);
 		}
-		
 	}
 }
