@@ -28,6 +28,10 @@ import org.apache.http.util.EntityUtils;
 
 import net.sf.json.JSONObject;
 import vo.AccessToken;
+import vo.Button;
+import vo.ClickButton;
+import vo.Menu;
+import vo.ViewButton;
 
 public class WeixinUtil {
 	
@@ -38,6 +42,12 @@ public class WeixinUtil {
 	
 	//上传临时消息
 	private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+	//新建菜单
+	private static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+	//查询菜单
+	private static final String QUERY_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
+	//删除菜单
+	private static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 	
 	/**
 	 * get请求
@@ -91,7 +101,7 @@ public class WeixinUtil {
 			map.put("token", token);
 			long expires_in = Long.parseLong(jsonObject.getString("expires_in"));
 			map.put("time", (new Date().getTime()+expires_in)+"");
-			propertyUtil.write("E:\\workspace\\Weixin\\src\\source\\token.properties", map);
+			propertyUtil.write("E:\\Workspace\\Weixin\\src\\source\\token.properties", map);
 		}
 	}
 	/*
@@ -99,13 +109,13 @@ public class WeixinUtil {
 	 * 如果token过期则刷新。
 	 * */
 	public static String getToken() throws ParseException, IOException {
-		String time = propertyUtil.read("E:\\workspace\\Weixin\\src\\source\\token.properties", "time");
+		String time = propertyUtil.read("E:\\Workspace\\Weixin\\src\\source\\token.properties", "time");
 		long datePre = Long.parseLong(time);
 		long dateNow = new Date().getTime();
 		if(dateNow>=datePre){
 			getAccessToken();
 		}
-		String token = propertyUtil.read("E:\\workspace\\Weixin\\src\\source\\token.properties", "token");
+		String token = propertyUtil.read("E:\\Workspace\\Weixin\\src\\source\\token.properties", "token");
 		return token;
 	}
 	
@@ -216,10 +226,82 @@ public class WeixinUtil {
 		return mediaId;
 	}
 	
+	/*
+	 * 初始化菜单
+	 * 自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。
+	 * */
+	public static Menu initMenu(){
+		Menu menu=new Menu();
+		
+		ClickButton button1=new ClickButton();
+		button1.setName("click菜单");
+		button1.setType("click");
+		button1.setKey("11");
+		
+		ViewButton button2=new ViewButton();
+		button2.setName("view菜单");
+		button2.setType("view");
+		button2.setUrl("http://www.dytt8.net/");
+		
+		ClickButton button3=new ClickButton();
+		button3.setName("扫码事件");
+		button3.setType("scancode_push");
+		button3.setKey("31");
+		
+		ClickButton button4=new ClickButton();
+		button4.setName("扫码消息接收");
+		button4.setType("scancode_waitmsg");
+		button4.setKey("41");
+		
+		ClickButton button5=new ClickButton();
+		button5.setName("拍照事件");
+		button5.setType("pic_sysphoto");
+		button5.setKey("51");
+		
+		ClickButton button6=new ClickButton();
+		button6.setName("拍照选择事件");
+		button6.setType("pic_photo_or_album");
+		button6.setKey("61");
+		
+		ClickButton button7=new ClickButton();
+		button7.setName("微信相册事件");
+		button7.setType("pic_weixin");
+		button7.setKey("71");
+		
+		ClickButton button8=new ClickButton();
+		button8.setName("地理位置事件");
+		button8.setType("location_select");
+		button8.setKey("81");
+		
+		Button button=new Button();
+		button.setName("菜单");
+		button.setSub_button(new Button[]{button3,button5,button7,button8});
+		
+		menu.setButton(new Button[]{button1,button2,button});
+		return menu;
+	}
+	
+	public static int createMenu(String token,String menu) throws ParseException, IOException {
+		int result = 0;
+		String url = CREATE_MENU_URL.replace("ACCESS_TOKEN", token);
+		JSONObject jsonObject = doPostStr(url, menu);
+		if(jsonObject !=null){
+			result=jsonObject.getInt("errcode");
+		}
+		return result;
+	}
+	
 	public static void main(String[] args) throws ParseException, IOException, KeyManagementException, NoSuchAlgorithmException, NoSuchProviderException {
 		//getAccessToken();
-		System.out.println(new Date().getTime());
-		String str = upload("E:\\workspace\\Weixin\\WebContent\\images\\thumb1.jpg", getToken(), "thumb");
-		System.out.println(str);
+		//System.out.println(new Date().getTime());
+		//upload("E:\\Workspace\\Weixin\\WebContent\\images\\thumb2.jpg", getToken(), "thumb");
+		String menu =JSONObject.fromObject(WeixinUtil.initMenu()).toString();
+		int result= WeixinUtil.createMenu(WeixinUtil.getToken(), menu);
+		if(result==0){
+			System.out.println("创建菜单成功");
+		}else{
+			System.out.println(""+result);
+		}
+		
 	}
 }

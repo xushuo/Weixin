@@ -14,13 +14,17 @@ import org.dom4j.io.SAXReader;
 
 import com.thoughtworks.xstream.XStream;
 
+import vo.Button;
+import vo.ClickButton;
 import vo.Image;
 import vo.ImageMsg;
+import vo.Menu;
 import vo.Music;
 import vo.MusicMsg;
 import vo.NewMsg;
 import vo.News;
 import vo.TextMsg;
+import vo.ViewButton;
 
 public class MsgUtil {
 
@@ -131,11 +135,18 @@ public class MsgUtil {
 	public static String initMusic(String ToUserName,String FromUserName){
 		Music music=new Music();
 		MusicMsg musicMsg =new MusicMsg();
-		music.setTitle("T-ara-Sexy Love");
-		music.setThumbMediaId("DEEqq46QczFX-AinHSsCeR4VarK0Qt_PcsWh6Dl2xMi9UhyRqJDRfXwYInjhfNu6");
-		music.setDescription("《Sexy Love》是韩国女子组合T-ara于2012年9月发布第七张迷你专辑 《Mirage》中的主打歌。");
-		music.setMusicUrl("http://xs2714.ngrok.cc/Weixin/music/T-ara-Sexy Love.mp3");
-		music.setHQMusicUrl("http://xs2714.ngrok.cc/Weixin/music/T-ara-Sexy Love.mp3");
+		music.setTitle("致青春-王菲");
+		music.setThumbMediaId("jfcxuDCULVdw3wFuk7Mf8FMG-0SPSlFp0oLTzIlhlz4y95-3g1VBM0cewWg3rQwX");
+		music.setDescription("《致我们终将逝去的青春》主题曲");
+		music.setMusicUrl("http://xs2714.ngrok.cc/Weixin/music/zhiqingchun.mp3");
+		music.setHQMusicUrl("http://xs2714.ngrok.cc/Weixin/music/zhiqingchun.mp3");
+		
+//		music.setTitle("T-ara-Sexy Love");
+//		music.setThumbMediaId("DEEqq46QczFX-AinHSsCeR4VarK0Qt_PcsWh6Dl2xMi9UhyRqJDRfXwYInjhfNu6");
+//		music.setDescription("《Sexy Love》是韩国女子组合T-ara于2012年9月发布第七张迷你专辑 《Mirage》中的主打歌。");
+//		music.setMusicUrl("http://xs2714.ngrok.cc/Weixin/music/T-ara-Sexy Love.mp3");
+//		music.setHQMusicUrl("http://xs2714.ngrok.cc/Weixin/music/T-ara-Sexy Love.mp3");
+		
 		
 		musicMsg.setMusic(music);
 		musicMsg.setCreateTime(new Date().getTime());
@@ -180,6 +191,8 @@ public class MsgUtil {
 		return MsgUtil.newToXml(newMsg);
 	}
 	
+	
+	
 	/*
 	 * 主菜单
 	 * 
@@ -210,7 +223,7 @@ public class MsgUtil {
 	public static String secondText(){
 		StringBuffer sb=new StringBuffer(); 
 		
-		sb.append(FileUtil.read("E:\\workspace\\Weixin\\src\\source\\everyday.properties"));
+		sb.append(FileUtil.read("E:\\Workspace\\Weixin\\src\\source\\everyday.properties"));
 		return sb.toString();
 	}
 	
