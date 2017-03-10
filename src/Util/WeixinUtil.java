@@ -311,12 +311,12 @@ public class WeixinUtil {
 		//getAccessToken();
 		//System.out.println(new Date().getTime());
 		//upload("E:\\Workspace\\Weixin\\WebContent\\images\\thumb2.jpg", getToken(), "thumb");
-		//String menu =JSONObject.fromObject(WeixinUtil.initMenu()).toString();
-		//int result= WeixinUtil.createMenu(WeixinUtil.getToken(), menu);
-		JSONObject jsonObject= WeixinUtil.queryMenu(WeixinUtil.getToken());
+		String menu =JSONObject.fromObject(WeixinUtil.initMenu()).toString();
+		int result= WeixinUtil.createMenu(WeixinUtil.getToken(), menu);
+		/*JSONObject jsonObject= WeixinUtil.queryMenu(WeixinUtil.getToken());
 		int result= WeixinUtil.deleteMenu(WeixinUtil.getToken());
 		System.out.println(jsonObject);
-		if(result==0){
+		*/if(result==0){
 			System.out.println("创建菜单成功");
 		}else{
 			System.out.println(""+result);

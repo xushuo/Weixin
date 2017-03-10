@@ -123,7 +123,7 @@ public class MsgUtil {
 	public static String initImage(String ToUserName,String FromUserName){
 		Image image=new Image();
 		ImageMsg imageMsg=new ImageMsg();
-		image.setMediaId("Wn-37JLJLH0TkMtROCcjXHweCLlpnXNqvhDMOZCbzCWfmrIR0t-ql7WLHOdxcC18");
+		image.setMediaId("Q8bimllZPaMJgJKNPY7TUaFn3QtI1iDS-csjzyZVyjWT0JciAD49Ttwf6dWkB7PN");
 		imageMsg.setImage(image);
 		imageMsg.setCreateTime(new Date().getTime());
 		imageMsg.setFromUserName(ToUserName);
@@ -139,8 +139,8 @@ public class MsgUtil {
 		music.setTitle("致青春-王菲");
 		music.setThumbMediaId("jfcxuDCULVdw3wFuk7Mf8FMG-0SPSlFp0oLTzIlhlz4y95-3g1VBM0cewWg3rQwX");
 		music.setDescription("《致我们终将逝去的青春》主题曲");
-		music.setMusicUrl("http://xs2714.ngrok.cc/Weixin/music/zhiqingchun.mp3");
-		music.setHQMusicUrl("http://xs2714.ngrok.cc/Weixin/music/zhiqingchun.mp3");
+		music.setMusicUrl("http://www.sunnyoswei.com.ngrok.cc/Weixin/music/zhiqingchun.mp3");
+		music.setHQMusicUrl("http://www.sunnyoswei.com.ngrok.cc/Weixin/music/zhiqingchun.mp3");
 		
 //		music.setTitle("T-ara-Sexy Love");
 //		music.setThumbMediaId("DEEqq46QczFX-AinHSsCeR4VarK0Qt_PcsWh6Dl2xMi9UhyRqJDRfXwYInjhfNu6");
@@ -163,24 +163,24 @@ public class MsgUtil {
 		News news1=new News();
 		news1.setTitle("近期流行的逗比语句");
 		news1.setDescription("近期流行的逗比语句");
-		news1.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding1.jpg");
+		news1.setPicUrl("http://www.sunnyoswei.com.ngrok.cc/Weixin/images/kidding1.jpg");
 		news1.setUrl("http://epaper.subaonet.com/csz8d/html/2014-11/05/content_283272.htm");
 		
 		News news2=new News();
 		news2.setTitle("30条让你瞬间凌乱的经典搞笑句子，太逗比了！");
 		news2.setDescription("30条让你瞬间凌乱的经典搞笑句子，太逗比了！");
-		news2.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding2.jpg");
+		news2.setPicUrl("http://www.sunnyoswei.com.ngrok.cc/Weixin/images/kidding2.jpg");
 		news2.setUrl("http://www.yikexun.cn/jingdiangaoxiaoyulu/2014/0924/24223.html");
 		
 		News news3=new News();
 		news3.setTitle("那些让你笑成逗比的句子");
 		news3.setDescription("那些让你笑成逗比的句子");
-		news3.setPicUrl("http://xs2714.ngrok.cc/Weixin/images/kidding3.jpg");
+		news3.setPicUrl("http://www.sunnyoswei.com.ngrok.cc/Weixin/images/kidding3.jpg");
 		news3.setUrl("http://tieba.baidu.com/p/3027006605");
 		
 		newlist.add(news1);
 		newlist.add(news2);
-		newlist.add(news3);
+		newlist.add(news3);//添加新闻
 		
 		NewMsg newMsg=new NewMsg();
 		newMsg.setArticleCount(newlist.size());

@@ -40,7 +40,10 @@ public class WeixinServlet extends HttpServlet {
 		String timestamp= request.getParameter("timestamp");
 		String nonce= request.getParameter("nonce");
 		String echostr= request.getParameter("echostr");
-		
+	/*	System.out.println("signature:"+signature);
+		System.out.println("timestamp:"+timestamp);
+		System.out.println("nonce:"+nonce);
+		System.out.println("echostr:"+echostr);*/
 		PrintWriter out=response.getWriter();
 		if(CheckUtil.checkSignature(signature, timestamp, nonce)){
 			out.print(echostr);
@@ -55,6 +58,7 @@ public class WeixinServlet extends HttpServlet {
 			String content = map.get("Content");
 			String msgId = map.get("MsgId");
 			String msg="";
+			System.out.println("msgType:"+msgType);
 			if(MsgUtil.MSG_TEXT.equals(msgType)){
 				if("1".equals(content)){
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.firstText());
@@ -76,24 +80,30 @@ public class WeixinServlet extends HttpServlet {
 				}
 			}else if(MsgUtil.MSG_EVENT.equals(msgType)){
 				String event = map.get("Event");
+				System.out.println("event:"+event);
 				if(MsgUtil.MSG_SUBSCRIBE.equals(event)){
+					System.out.println("MsgUtil.menuText():"+MsgUtil.menuText());
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
 				}
 				if(MsgUtil.MSG_CLICK.equals(event)){
+					System.out.println("MsgUtil.menuText():"+MsgUtil.menuText());
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
 				}
 				if(MsgUtil.MSG_VIEW.equals(event)){
 					String url = map.get("EventKey");
+					System.out.println("url:"+url);
 					msg = MsgUtil.initText(toUserName, fromUserName, url);
 				}
 				if(MsgUtil.MSG_SCANCODE.equals(event)){
 					String key = map.get("EventKey");
+					System.out.println("key:"+key);
 					msg = MsgUtil.initText(toUserName, fromUserName, key);
 				}
 			}else if(MsgUtil.MSG_LOCATION.equals(msgType)){
 				String label = map.get("Label");//开发文档有错误
 				msg = MsgUtil.initText(toUserName, fromUserName, label);
 			}
+			System.out.println("msg"+msg);
 			out.print(msg);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
