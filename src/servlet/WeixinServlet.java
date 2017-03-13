@@ -50,16 +50,16 @@ public class WeixinServlet extends HttpServlet {
 		}
 		
 		try {
-			Map<String, String> map=MsgUtil.xmlToMap(request);
-			String toUserName = map.get("ToUserName");
-			String fromUserName = map.get("FromUserName");
-			String createTime = map.get("CreateTime");
-			String msgType = map.get("MsgType");
-			String content = map.get("Content");
-			String msgId = map.get("MsgId");
+			Map<String, Object> map=MsgUtil.xmlToMap(request);
+			String toUserName = map.get("ToUserName").toString();
+			String fromUserName = map.get("FromUserName").toString();
+			String createTime = map.get("CreateTime").toString();
+			String msgType = map.get("MsgType").toString();
+			//String msgId = map.get("MsgId").toString();
 			String msg="";
 			System.out.println("msgType:"+msgType);
 			if(MsgUtil.MSG_TEXT.equals(msgType)){
+				String content = map.get("Content").toString();
 				if("1".equals(content)){
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.firstText());
 				}
@@ -79,7 +79,7 @@ public class WeixinServlet extends HttpServlet {
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
 				}
 			}else if(MsgUtil.MSG_EVENT.equals(msgType)){
-				String event = map.get("Event");
+				String event = map.get("Event").toString();
 				System.out.println("event:"+event);
 				if(MsgUtil.MSG_SUBSCRIBE.equals(event)){
 					System.out.println("MsgUtil.menuText():"+MsgUtil.menuText());
@@ -90,17 +90,27 @@ public class WeixinServlet extends HttpServlet {
 					msg = MsgUtil.initText(toUserName, fromUserName, MsgUtil.menuText());
 				}
 				if(MsgUtil.MSG_VIEW.equals(event)){
-					String url = map.get("EventKey");
+					String url = map.get("EventKey").toString();
 					System.out.println("url:"+url);
 					msg = MsgUtil.initText(toUserName, fromUserName, url);
 				}
 				if(MsgUtil.MSG_SCANCODE.equals(event)){
-					String key = map.get("EventKey");
+					String key = map.get("EventKey").toString();
+					//String ScanCodeInfo = map.get("ScanCodeInfo");
 					System.out.println("key:"+key);
+					System.out.println("map:"+map);
+					msg = MsgUtil.initText(toUserName, fromUserName, key);
+				}
+				if(MsgUtil.MSG_PIC_SYSPHOTO.equals(event)){
+					String key = map.get("EventKey").toString();
+					//String SendPicsInfo = map.get("SendPicsInfo");
+					System.out.println("key:"+key);
+					System.out.println("map:"+map);
 					msg = MsgUtil.initText(toUserName, fromUserName, key);
 				}
 			}else if(MsgUtil.MSG_LOCATION.equals(msgType)){
-				String label = map.get("Label");//开发文档有错误
+				String label = map.get("Label").toString();//开发文档有错误
+				System.out.println("map:"+map);
 				msg = MsgUtil.initText(toUserName, fromUserName, label);
 			}
 			System.out.println("msg"+msg);

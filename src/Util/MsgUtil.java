@@ -41,27 +41,34 @@ public class MsgUtil {
 	public static final String MSG_NEWS="news";
 	public static final String MSG_MUSIC="music";
 	public static final String MSG_SCANCODE="scancode_push";
+	public static final String MSG_PIC_SYSPHOTO="pic_sysphoto";
 	
 	/**
 	 * xml 转换成 map
 	 * 
 	 * */
-	public static Map<String,String> xmlToMap(HttpServletRequest request)throws Exception {
-		Map<String,String> map=new HashMap<>();
+	public static Map<String,Object> xmlToMap(HttpServletRequest request)throws Exception {
+		Map<String,Object> map=new HashMap<>();
 		SAXReader reader=new SAXReader();
 		
 		InputStream ins=request.getInputStream();
 		Document doc = reader.read(ins);
-		
+		/*
 		Element root = doc.getRootElement();
 		List<Element> list = root.elements();
 		for (Element element : list) {
 			map.put(element.getName(), element.getText());
 		}
-		ins.close();
-		
+		ins.close();*/
+          
+        map = XmlUtils.Dom2Map(doc);  
+          
+       // System.out.println(map.toString());  
+        ins.close();
 		return map;
 	}
+	
+	
 	
 	/*
 	 * 将文本对象转换成xml
